@@ -1,0 +1,30 @@
+From 415bb64bc33b719c0587ec2429f54a81266df70a Mon Sep 17 00:00:00 2001
+From: David Cerdeira <davidmcerdeira@gmail.com>
+Date: Tue, 21 Jan 2025 15:57:35 +0000
+Subject: [PATCH] Add bao device tree node
+
+---
+ arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+index 195604086df3..3b10735ea535 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+@@ -12,6 +12,16 @@ chosen {
+ 		// stdout-path = &uart3;
+ 	};
+ 
++        bao-ipc@f0000000 {
++                    compatible = "bao,ipcshmem";
++                    reg = <0x0 0xf0000000 0x0 0x00010000>;
++                    read-channel = <0x0 0x2000>;
++                    write-channel = <0x2000 0x2000>;
++                    interrupts = <0 20 1>;
++                    interrupt-parent = <&gic>;
++                    id = <0>;
++        };
++
+ 	aliases {
+ 		/* Ethernet aliases to ensure correct MAC addresses */
+ 		ethernet0 = &eqos;
