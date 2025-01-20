@@ -1,0 +1,54 @@
+This README file contains information on the contents of the meta-bao layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: meta-toradex-torizon
+  branch: 5d4df8065d2989d84bd120f0a1e2a6ab0567ab07
+
+Patches
+=======
+
+Please submit any patches against the meta-bao layer by opening a pull request
+at https://github.com/bao-project/meta-bao
+
+Maintainer: David Cerdeira <davidmcerdeira@gmail.com>
+
+Table of Contents
+=================
+
+  I. Adding the meta-bao layer to your build
+ II. Misc
+
+
+I. Adding the meta-bao layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-bao'
+
+II. Misc
+========
+
+meta-bao is a Yocto/OpenEmbedded layer that provides Linux kernel patches and
+configuration to run TorizonOS as a guest under the Bao hypervisor alongside a
+FreeRTOS guest. It targets the Toradex Verdin iMX8MP and is compatible with
+the Yocto scarthgap release.
+
+The layer appends the linux-toradex 6.6-2.1.x recipe with the following:
+
+  - 0001-add-bao-ipcshmem-driver.patch
+      Adds the Bao IPC shared memory driver (drivers/bao/bao-ipcshmem.c)
+      to the kernel source tree.
+
+  - 0002-Remove-imx8mp-UART3-and-CPU3.patch
+      Removes UART3 and CPU3 from imx8mp device trees, freeing those
+      resources for exclusive use by the FreeRTOS guest.
+
+  - 0003-Add-bao-device-tree-node.patch
+      Adds the bao-ipc@f0000000 shared memory node to imx8mp-verdin.dtsi,
+      describing the IPC region used for inter-VM communication.
+
+  - enablebaodriver.cfg
+      Kernel config fragment that enables CONFIG_BAO_SHMEM=y.

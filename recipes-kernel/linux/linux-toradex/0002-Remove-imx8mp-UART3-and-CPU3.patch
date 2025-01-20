@@ -1,0 +1,603 @@
+From a3fe116e381fc75a41b142d5eddeda4efb5c0269 Mon Sep 17 00:00:00 2001
+From: David Cerdeira <davidmcerdeira@gmail.com>
+Date: Fri, 17 Jan 2025 16:59:11 +0000
+Subject: [PATCH] Remove imx8mp UART3 and CPU3
+
+---
+ arch/arm64/boot/dts/freescale/imx8mp-ab2.dts  | 22 ++---
+ .../dts/freescale/imx8mp-evk-8mic-swpdm.dts   |  6 +-
+ .../boot/dts/freescale/imx8mp-evk-dsp.dts     |  6 +-
+ .../freescale/imx8mp-evk-revA3-8mic-revE.dts  |  6 +-
+ .../boot/dts/freescale/imx8mp-evk-root.dts    |  6 +-
+ .../boot/dts/freescale/imx8mp-evk-rpmsg.dts   |  6 +-
+ arch/arm64/boot/dts/freescale/imx8mp-evk.dts  | 22 ++---
+ .../boot/dts/freescale/imx8mp-msc-sm2s.dtsi   | 18 ++--
+ arch/arm64/boot/dts/freescale/imx8mp-navq.dts | 22 ++---
+ .../dts/freescale/imx8mp-phycore-som.dtsi     |  6 +-
+ .../dts/freescale/imx8mp-verdin-dahlia.dtsi   |  6 +-
+ .../boot/dts/freescale/imx8mp-verdin-dev.dtsi |  6 +-
+ .../boot/dts/freescale/imx8mp-verdin-ivy.dtsi |  6 +-
+ .../dts/freescale/imx8mp-verdin-mallow.dtsi   |  6 +-
+ .../dts/freescale/imx8mp-verdin-yavia.dtsi    |  6 +-
+ .../boot/dts/freescale/imx8mp-verdin.dtsi     | 26 ++---
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi     | 97 ++++++++++---------
+ drivers/clk/imx/clk-imx8mp.c                  |  4 +-
+ 18 files changed, 139 insertions(+), 138 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts b/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
+index 91c68876362f..ce937bbe7969 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
+@@ -148,9 +148,9 @@ &A53_2 {
+ 	cpu-supply = <&buck2>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&buck2>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&buck2>;
++// };
+ 
+ &pwm1 {
+ 	pinctrl-names = "default";
+@@ -503,14 +503,14 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
+-	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
+-	fsl,uart-has-rtscts;
+-	status = "okay";
+-};
++// &uart3 {
++// 	pinctrl-names = "default";
++// 	pinctrl-0 = <&pinctrl_uart3>;
++// 	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
++// 	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
++// 	fsl,uart-has-rtscts;
++// 	status = "okay";
++// };
+ 
+ &usdhc1 {
+ 	assigned-clocks = <&clk IMX8MP_CLK_USDHC1>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk-8mic-swpdm.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk-8mic-swpdm.dts
+index 14be568bca9e..8836b6e47eb1 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk-8mic-swpdm.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk-8mic-swpdm.dts
+@@ -67,6 +67,6 @@ &sai5 {
+ 	status = "okay";
+ };
+ 
+-&uart3 {
+-    status = "disabled";
+-};
++// &uart3 {
++//     status = "disabled";
++// };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk-dsp.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk-dsp.dts
+index beb9affccdf9..e99dc204dd0f 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk-dsp.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk-dsp.dts
+@@ -106,9 +106,9 @@ &uart4 {
+ 	status = "disabled";
+ };
+ 
+-&uart3 {
+-	status = "disabled";
+-};
++// &uart3 {
++// 	status = "disabled";
++// };
+ 
+ &micfil {
+ 	status = "disabled";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk-revA3-8mic-revE.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk-revA3-8mic-revE.dts
+index 3a92958b5bb7..14b62e81f737 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk-revA3-8mic-revE.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk-revA3-8mic-revE.dts
+@@ -203,6 +203,6 @@ led@11 {
+ 	};
+ };
+ 
+-&uart3 {
+-	status = "disabled";
+-};
++// &uart3 {
++// 	status = "disabled";
++// };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk-root.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk-root.dts
+index d3f69c0a07a1..ffab0b35c5c6 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk-root.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk-root.dts
+@@ -15,9 +15,9 @@ resmem: reserved-memory {
+ 	};
+ };
+ 
+-&cpu_pd_wait {
+-	/delete-property/ compatible;
+-};
++// &cpu_pd_wait {
++// 	/delete-property/ compatible;
++// };
+ 
+ &clk {
+ 	init-on-array = <IMX8MP_CLK_USDHC3_ROOT
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk-rpmsg.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk-rpmsg.dts
+index ddf5f76adc3b..b64107f0b0da 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk-rpmsg.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk-rpmsg.dts
+@@ -210,9 +210,9 @@ &sdma3{
+ 	status = "disabled";
+ };
+ 
+-&uart3 {
+-    status = "disabled";
+-};
++// &uart3 {
++//     status = "disabled";
++// };
+ 
+ &uart4 {
+ 	status = "disabled";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+index 695d76afdfaf..6720501b5559 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+@@ -249,9 +249,9 @@ &A53_2 {
+ 	cpu-supply = <&buck2>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&buck2>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&buck2>;
++// };
+ 
+ &dsp {
+ 	status = "okay";
+@@ -935,14 +935,14 @@ &usb_dwc3_1 {
+ 	status = "okay";
+ };
+ 
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
+-	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
+-	uart-has-rtscts;
+-	status = "okay";
+-};
++// &uart3 {
++// 	pinctrl-names = "default";
++// 	pinctrl-0 = <&pinctrl_uart3>;
++// 	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
++// 	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
++// 	uart-has-rtscts;
++// 	status = "okay";
++// };
+ 
+ &usdhc2 {
+ 	assigned-clocks = <&clk IMX8MP_CLK_USDHC2>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-msc-sm2s.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-msc-sm2s.dtsi
+index 61c2a63efc6d..44c56a86f782 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-msc-sm2s.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-msc-sm2s.dtsi
+@@ -125,9 +125,9 @@ &A53_2 {
+ 	cpu-supply = <&vcc_arm>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&vcc_arm>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&vcc_arm>;
++// };
+ 
+ &ecspi1 {
+ 	#address-cells = <1>;
+@@ -444,12 +444,12 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	uart-has-rtscts;
+-	status = "okay";
+-};
++// &uart3 {
++// 	pinctrl-names = "default";
++// 	pinctrl-0 = <&pinctrl_uart3>;
++// 	uart-has-rtscts;
++// 	status = "okay";
++// };
+ 
+ &uart4 {
+ 	pinctrl-names = "default";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-navq.dts b/arch/arm64/boot/dts/freescale/imx8mp-navq.dts
+index fef759315654..201b5771845c 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-navq.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-navq.dts
+@@ -172,9 +172,9 @@ &A53_2 {
+ 	cpu-supply = <&buck2>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&buck2>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&buck2>;
++// };
+ 
+ &aud2htx {
+ 	status = "okay";
+@@ -601,14 +601,14 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
+-	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
+-	fsl,uart-has-rtscts;
+-	status = "okay";
+-};
++// &uart3 {
++// 	pinctrl-names = "default";
++// 	pinctrl-0 = <&pinctrl_uart3>;
++// 	assigned-clocks = <&clk IMX8MP_CLK_UART3>;
++// 	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
++// 	fsl,uart-has-rtscts;
++// 	status = "okay";
++// };
+ 
+ &uart4 {
+ 	pinctrl-names = "default";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
+index d8df97060e8f..78bdbb1ba983 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
+@@ -34,9 +34,9 @@ &A53_2 {
+ 	cpu-supply = <&buck2>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&buck2>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&buck2>;
++// };
+ 
+ /* ethernet 1 */
+ &fec {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dahlia.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dahlia.dtsi
+index b23803083b4e..9e9e9e82829d 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dahlia.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dahlia.dtsi
+@@ -198,9 +198,9 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3, used as the Linux Console */
+-&uart3 {
+-	status = "okay";
+-};
++// &uart3 {
++// 	status = "okay";
++// };
+ 
+ /* Verdin USB_1 */
+ &usb3_0 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
+index 0ee8b8051dd4..4b24a06e17a4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-dev.dtsi
+@@ -197,9 +197,9 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3, used as the Linux Console */
+-&uart3 {
+-	status = "okay";
+-};
++// &uart3 {
++// 	status = "okay";
++// };
+ 
+ /* Verdin USB_1 */
+ &usb3_0 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
+index db1b4ee7728c..3c69ec0ea2db 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
+@@ -451,9 +451,9 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3 */
+-&uart3 {
+-	status = "okay";
+-};
++// &uart3 {
++// 	status = "okay";
++// };
+ 
+ /* Verdin USB_1 */
+ &usb3_0 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-mallow.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-mallow.dtsi
+index e7baba108eb6..e8b6c1976916 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-mallow.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-mallow.dtsi
+@@ -161,9 +161,9 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3 */
+-&uart3 {
+-	status = "okay";
+-};
++// &uart3 {
++// 	status = "okay";
++// };
+ 
+ /* Verdin USB_1 */
+ &usb3_0 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
+index 444b01c96315..6450ffdc6a41 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
+@@ -171,9 +171,9 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3, used as the Linux Console */
+-&uart3 {
+-	status = "okay";
+-};
++// &uart3 {
++// 	status = "okay";
++// };
+ 
+ /* Verdin USB_1 */
+ &usb3_phy0 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+index a631dfc0e1f4..195604086df3 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+@@ -9,7 +9,7 @@
+ 
+ / {
+ 	chosen {
+-		stdout-path = &uart3;
++		// stdout-path = &uart3;
+ 	};
+ 
+ 	aliases {
+@@ -185,9 +185,9 @@ &A53_2 {
+ 	cpu-supply = <&reg_vdd_arm>;
+ };
+ 
+-&A53_3 {
+-	cpu-supply = <&reg_vdd_arm>;
+-};
++// &A53_3 {
++// 	cpu-supply = <&reg_vdd_arm>;
++// };
+ 
+ &cpu_alert0 {
+ 	temperature = <95000>;
+@@ -842,10 +842,10 @@ &uart2 {
+ };
+ 
+ /* Verdin UART_3, used as the Linux Console */
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-};
++// &uart3 {
++// 	pinctrl-names = "default";
++// 	pinctrl-0 = <&pinctrl_uart3>;
++// };
+ 
+ /* Verdin UART_4, used for Bluetooth on Wi-Fi/Bluetooth SKUs */
+ &uart4 {
+@@ -1285,11 +1285,11 @@ pinctrl_uart2: uart2grp {
+ 			<MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX		0x1c4>; /* SODIMM 139 */
+ 	};
+ 
+-	pinctrl_uart3: uart3grp {
+-		fsl,pins =
+-			<MX8MP_IOMUXC_UART3_RXD__UART3_DCE_RX		0x1c4>,	/* SODIMM 147 */
+-			<MX8MP_IOMUXC_UART3_TXD__UART3_DCE_TX		0x1c4>;	/* SODIMM 149 */
+-	};
++	// pinctrl_uart3: uart3grp {
++	// 	fsl,pins =
++	// 		<MX8MP_IOMUXC_UART3_RXD__UART3_DCE_RX		0x1c4>,	/* SODIMM 147 */
++	// 		<MX8MP_IOMUXC_UART3_TXD__UART3_DCE_TX		0x1c4>;	/* SODIMM 149 */
++	// };
+ 
+ 	/* Non-wifi usage only */
+ 	pinctrl_uart4: uart4grp {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+index 55adf1bf45d9..c38ebb029726 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+@@ -38,7 +38,7 @@ aliases {
+ 		mmc2 = &usdhc3;
+ 		serial0 = &uart1;
+ 		serial1 = &uart2;
+-		serial2 = &uart3;
++		// serial2 = &uart3;
+ 		serial3 = &uart4;
+ 		spi0 = &flexspi;
+ 		isi0 = &isi_0;
+@@ -53,19 +53,19 @@ cpus {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		idle-states {
+-			entry-method = "psci";
++		// idle-states {
++		// 	entry-method = "psci";
+ 
+-			cpu_pd_wait: cpu-pd-wait {
+-				compatible = "arm,idle-state";
+-				arm,psci-suspend-param = <0x0010033>;
+-				local-timer-stop;
+-				entry-latency-us = <1000>;
+-				exit-latency-us = <700>;
+-				min-residency-us = <2700>;
+-				wakeup-latency-us = <1500>;
+-			};
+-		};
++		// 	cpu_pd_wait: cpu-pd-wait {
++		// 		compatible = "arm,idle-state";
++		// 		arm,psci-suspend-param = <0x0010033>;
++		// 		local-timer-stop;
++		// 		entry-latency-us = <1000>;
++		// 		exit-latency-us = <700>;
++		// 		min-residency-us = <2700>;
++		// 		wakeup-latency-us = <1500>;
++		// 	};
++		// };
+ 
+ 		A53_0: cpu@0 {
+ 			device_type = "cpu";
+@@ -85,7 +85,7 @@ A53_0: cpu@0 {
+ 			nvmem-cell-names = "speed_grade";
+ 			operating-points-v2 = <&a53_opp_table>;
+ 			#cooling-cells = <2>;
+-			cpu-idle-states = <&cpu_pd_wait>;
++			// cpu-idle-states = <&cpu_pd_wait>;
+ 		};
+ 
+ 		A53_1: cpu@1 {
+@@ -104,7 +104,7 @@ A53_1: cpu@1 {
+ 			next-level-cache = <&A53_L2>;
+ 			operating-points-v2 = <&a53_opp_table>;
+ 			#cooling-cells = <2>;
+-			cpu-idle-states = <&cpu_pd_wait>;
++			// cpu-idle-states = <&cpu_pd_wait>;
+ 		};
+ 
+ 		A53_2: cpu@2 {
+@@ -123,27 +123,27 @@ A53_2: cpu@2 {
+ 			next-level-cache = <&A53_L2>;
+ 			operating-points-v2 = <&a53_opp_table>;
+ 			#cooling-cells = <2>;
+-			cpu-idle-states = <&cpu_pd_wait>;
++			// cpu-idle-states = <&cpu_pd_wait>;
+ 		};
+ 
+-		A53_3: cpu@3 {
+-			device_type = "cpu";
+-			compatible = "arm,cortex-a53";
+-			reg = <0x3>;
+-			clock-latency = <61036>;
+-			clocks = <&clk IMX8MP_CLK_ARM>;
+-			enable-method = "psci";
+-			i-cache-size = <0x8000>;
+-			i-cache-line-size = <64>;
+-			i-cache-sets = <256>;
+-			d-cache-size = <0x8000>;
+-			d-cache-line-size = <64>;
+-			d-cache-sets = <128>;
+-			next-level-cache = <&A53_L2>;
+-			operating-points-v2 = <&a53_opp_table>;
+-			#cooling-cells = <2>;
+-			cpu-idle-states = <&cpu_pd_wait>;
+-		};
++		// A53_3: cpu@3 {
++		// 	device_type = "cpu";
++		// 	compatible = "arm,cortex-a53";
++		// 	reg = <0x3>;
++		// 	clock-latency = <61036>;
++		// 	clocks = <&clk IMX8MP_CLK_ARM>;
++		// 	enable-method = "psci";
++		// 	i-cache-size = <0x8000>;
++		// 	i-cache-line-size = <64>;
++		// 	i-cache-sets = <256>;
++		// 	d-cache-size = <0x8000>;
++		// 	d-cache-line-size = <64>;
++		// 	d-cache-sets = <128>;
++		// 	next-level-cache = <&A53_L2>;
++		// 	operating-points-v2 = <&a53_opp_table>;
++		// 	#cooling-cells = <2>;
++		// 	cpu-idle-states = <&cpu_pd_wait>;
++		// };
+ 
+ 		A53_L2: l2-cache0 {
+ 			compatible = "cache";
+@@ -406,7 +406,7 @@ map0 {
+ 						<&A53_0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+ 						<&A53_1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+ 						<&A53_2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-						<&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++						// <&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+ 						<&mix_gpu_ml 0 1>;
+ 				};
+ 			};
+@@ -436,8 +436,9 @@ map0 {
+ 					cooling-device =
+ 						<&A53_0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+ 						<&A53_1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-						<&A53_2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-						<&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++						<&A53_2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>// ,
++						// <&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>
++                                                ;
+ 				};
+ 			};
+ 		};
+@@ -1086,17 +1087,17 @@ uart1: serial@30860000 {
+ 					status = "disabled";
+ 				};
+ 
+-				uart3: serial@30880000 {
+-					compatible = "fsl,imx8mp-uart", "fsl,imx6q-uart";
+-					reg = <0x30880000 0x10000>;
+-					interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+-					clocks = <&clk IMX8MP_CLK_UART3_ROOT>,
+-						 <&clk IMX8MP_CLK_UART3_ROOT>;
+-					clock-names = "ipg", "per";
+-					dmas = <&sdma1 26 4 0>, <&sdma1 27 4 0>;
+-					dma-names = "rx", "tx";
+-					status = "disabled";
+-				};
++				// uart3: serial@30880000 {
++				// 	compatible = "fsl,imx8mp-uart", "fsl,imx6q-uart";
++				// 	reg = <0x30880000 0x10000>;
++				// 	interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
++				// 	clocks = <&clk IMX8MP_CLK_UART3_ROOT>,
++				// 		 <&clk IMX8MP_CLK_UART3_ROOT>;
++				// 	clock-names = "ipg", "per";
++				// 	dmas = <&sdma1 26 4 0>, <&sdma1 27 4 0>;
++				// 	dma-names = "rx", "tx";
++				// 	status = "disabled";
++				// };
+ 
+ 				uart2: serial@30890000 {
+ 					compatible = "fsl,imx8mp-uart", "fsl,imx6q-uart";
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index f918185a6e9b..f4a8ce0fba14 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -614,7 +614,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 
+ 	hws[IMX8MP_CLK_UART1] = imx8m_clk_hw_composite("uart1", imx8mp_uart1_sels, ccm_base + 0xaf00);
+ 	hws[IMX8MP_CLK_UART2] = imx8m_clk_hw_composite("uart2", imx8mp_uart2_sels, ccm_base + 0xaf80);
+-	hws[IMX8MP_CLK_UART3] = imx8m_clk_hw_composite("uart3", imx8mp_uart3_sels, ccm_base + 0xb000);
++	// hws[IMX8MP_CLK_UART3] = imx8m_clk_hw_composite("uart3", imx8mp_uart3_sels, ccm_base + 0xb000);
+ 	hws[IMX8MP_CLK_UART4] = imx8m_clk_hw_composite("uart4", imx8mp_uart4_sels, ccm_base + 0xb080);
+ 	hws[IMX8MP_CLK_USB_CORE_REF] = imx8m_clk_hw_composite("usb_core_ref", imx8mp_usb_core_ref_sels, ccm_base + 0xb100);
+ 	hws[IMX8MP_CLK_USB_PHY_REF] = imx8m_clk_hw_composite("usb_phy_ref", imx8mp_usb_phy_ref_sels, ccm_base + 0xb180);
+@@ -698,7 +698,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_GPU3D_ROOT] = imx_clk_hw_gate4("gpu3d_root_clk", "gpu3d_core", ccm_base + 0x4460, 0);
+ 	hws[IMX8MP_CLK_UART1_ROOT] = imx_clk_hw_gate4("uart1_root_clk", "uart1", ccm_base + 0x4490, 0);
+ 	hws[IMX8MP_CLK_UART2_ROOT] = imx_clk_hw_gate4("uart2_root_clk", "uart2", ccm_base + 0x44a0, 0);
+-	hws[IMX8MP_CLK_UART3_ROOT] = imx_clk_hw_gate4("uart3_root_clk", "uart3", ccm_base + 0x44b0, 0);
++	/* hws[IMX8MP_CLK_UART3_ROOT] = imx_clk_hw_gate4("uart3_root_clk", "uart3", ccm_base + 0x44b0, 0); */
+ 	hws[IMX8MP_CLK_UART4_ROOT] = imx_clk_hw_gate4("uart4_root_clk", "uart4", ccm_base + 0x44c0, 0);
+ 	hws[IMX8MP_CLK_USB_ROOT] = imx_clk_hw_gate2_shared2("usb_root_clk", "hsio_axi", ccm_base + 0x44d0, 0, &share_count_usb);
+ 	hws[IMX8MP_CLK_USB_SUSP] = imx_clk_hw_gate2_shared2("usb_suspend_clk", "osc_32k", ccm_base + 0x44d0, 0, &share_count_usb);
